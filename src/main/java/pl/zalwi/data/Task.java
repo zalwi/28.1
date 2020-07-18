@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 public class Task {
@@ -66,20 +67,32 @@ public class Task {
         }
     }
 
-    public String checkStatus(){
+    public Status checkStatus(){
         if(!finished){
             if(deadlineDate.isBefore(LocalDateTime.now())){
-                return "Opóźnione";
+                return Status.DELAYED;
             }else{
-                return "W trakcie realizacji";
+                return Status.INPROGRESS;
             }
         }else{
             if(deadlineDate.isBefore(endDate)){
-                return "Wykonane po terminie";
+                return Status.DONEAFTER;
             }else{
-                return "Wykonane";
+                return Status.DONE;
             }
         }
+    }
+
+    public String calculateDelay(){
+
+        if(deadlineDate.equals(null)){return "00h00s";};
+
+        long minutes = ChronoUnit.MINUTES.between(deadlineDate, LocalDateTime.now());
+        long hours = ChronoUnit.HOURS.between(deadlineDate, LocalDateTime.now());
+
+        long minutesWithoutHours = minutes % 60;
+
+        return hours + "h" + minutesWithoutHours + "s";
     }
 
     public Long getId() {
