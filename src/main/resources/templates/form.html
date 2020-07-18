@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Transakcja</title>
+    <title>Zadanie</title>
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
@@ -13,7 +13,7 @@
     <div class="header">
         <h1>28.1 Zarządzenie zadaniami</h1>
     </div>
-    <form th:action="'/'+${actionLink}" method="post" style="width: 50%">
+    <form th:action="'/'+${actionLink}" th:object="${task}" method="post" style="width: 50%">
         <div>
             <h2 th:text="${actionDescription}">DODAJ AKCJĘ</h2>
         </div>
@@ -25,8 +25,8 @@
                    th:value="${task?.id}">
         </div>
         <div class="form-group">
-            <label for="type">Typ</label>
-            <select id="type" class="form-control" name="type" required th:readonly="${isBlocked}">
+            <label for="category">Typ</label>
+            <select id="category" class="form-control" name="category" required th:readonly="${isBlocked}">
                 <option value="" selected disabled>
                     Wybierz kategorię zadania..
                 </option>
@@ -43,27 +43,27 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="inputName">Opis</label>
-            <input type="text" class="form-control" id="inputName" placeholder="Opis zadania" name="description"
+            <label for="inputDescription">Opis</label>
+            <input type="text" class="form-control" id="inputDescription" placeholder="Opis zadania" name="description"
                    required th:value="${task?.description}" th:readonly="${isBlocked}">
         </div>
         <div class="form-group">
-            <label for="inputDatetime">Data utworzenia</label>
-            <input class="form-control" type="datetime-local" id="inputDatetime" name="datetime" required
+            <label for="inputCreationDate">Data utworzenia</label>
+            <input class="form-control" type="datetime-local" id="inputCreationDate" name="creationDate" required
                    th:value="${task?.creationDate}" th:readonly="${isBlocked}">
         </div>
         <div class="form-group">
-            <label for="inputDatetime">Termin wykonania</label>
-            <input class="form-control" type="datetime-local" id="inputDatetime" name="datetime" required
+            <label for="inputDeadlineDate">Termin wykonania</label>
+            <input class="form-control" type="datetime-local" id="inputDeadlineDate" name="deadlineDate" required
                    th:value="${task?.deadlineDate}" th:readonly="${isBlocked}">
         </div>
         <div class="form-group">
-            <label for="inputDatetime">Data zakończenia</label>
-            <input class="form-control" type="datetime-local" id="inputDatetime" name="datetime" required
-                   th:value="${task?.endDate}" th:readonly="${isBlocked}">
+            <label for="inputEndDate">Data zakończenia</label>
+            <input class="form-control" type="datetime-local" id="inputEndDate" name="endDate" required
+                   th:value="${task?.endDate}" th:readonly="${isBlocked}" th:disabled="${isNew}">
         </div>
         <div class="form-check" style="float: right">
-            <input class="form-check-input" type="checkbox" value="" id="finished" disabled>
+            <input class="form-check-input" type="checkbox" id="finished" disabled th:checked="${task?.finished}">
             <label class="form-check-label" for="finished">
                 Wykonane
             </label>

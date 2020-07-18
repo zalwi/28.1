@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.zalwi.data.Task;
+import pl.zalwi.data.TaskForm;
 import pl.zalwi.service.TaskService;
 
 import java.util.Optional;
@@ -41,5 +44,21 @@ public class TaskController {
                 }
         );
         return "list";
+    }
+
+    @GetMapping("/new")
+    public String newTransaction(Model model) {
+        model.addAttribute("actionDescription", "Dodawanie nowego zadania");
+        model.addAttribute("action", "Dodaj");
+        model.addAttribute("actionLink", "add");
+        model.addAttribute("isBlocked", false);
+        model.addAttribute("isNew", true);
+        return "form";
+    }
+
+    @PostMapping("/add")
+    public String test(TaskForm taskData){
+        taskService.save(taskData.convertToTask());
+        return "redirect:/";
     }
 }

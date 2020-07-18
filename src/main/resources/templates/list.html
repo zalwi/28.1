@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Lista produktów</title>
+    <title>Lista zadań</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -39,16 +39,16 @@
                     <p th:text="${task.description}">description</p>
                 </td>
                 <td>
-                    <p th:text="${task.creationDate}">creationDate</p>
+                    <p th:text="${task.getCreationDateInSqlDateTimeFormat()}">creationDate</p>
                 </td>
                 <td>
-                    <p th:text="${task.deadlineDate}">deadlineDate</p>
+                    <p th:text="${task.getDeadlineDateInSqlDateTimeFormat()}">deadlineDate</p>
                 </td>
                 <td>
-                    <p th:text="${task.endDate}">endDate</p>
+                    <p th:text="${task.getEndDateInSqlDateTimeFormat()}">endDate</p>
                 </td>
                 <td>
-                    <p th:text="${task.finished}">finished</p>
+                    <p th:text="${task.checkStatus()}">finished</p>
                 </td>
                 <td>
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pen" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
