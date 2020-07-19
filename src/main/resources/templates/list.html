@@ -45,7 +45,14 @@
                     <p th:text="${task.getDeadlineDateInSqlDateTimeFormat()}">deadlineDate</p>
                 </td>
                 <td>
-                    <p th:text="${task.getEndDateInSqlDateTimeFormat()}">endDate</p>
+                    <p th:if="${task.endDate != null}" th:text="${task.getEndDateInSqlDateTimeFormat()}">endDate</p>
+                    <div th:if="${task.endDate == null}">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-journal-check" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 1h5v1H4a1 1 0 0 0-1 1H2a2 2 0 0 1 2-2zm10 7v5a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V8h1zM2 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H2zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H2zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H2z"/>
+                            <path fill-rule="evenodd" d="M15.854 2.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 4.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                        </svg>
+                        <small><a th:href="@{'/endNow?id=' + ${task.id}}">Zakończ teraz</a></small>
+                    </div>
                 </td>
                 <td th:switch="${task.checkStatus()}">
 <!--                    <p th:text="${task.checkStatus()}">finished</p>-->
@@ -56,9 +63,9 @@
                             <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zm9 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5z"/>
                             <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z"/>
                         </svg>
-                        Wykonane
+                        Wykonane w terminie
                     </div>
-                    <div th:case="${T(pl.zalwi.data.Status).DONEAFTER}" style="color: darkslategrey">
+                    <div th:case="${T(pl.zalwi.data.Status).DONEAFTER}" style="color: dimgrey">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.146-3.146a.5.5 0 0 0-.708-.708L8 7.293 4.854 4.146a.5.5 0 1 0-.708.708L7.293 8l-3.147 3.146a.5.5 0 0 0 .708.708L8 8.707l3.146 3.147a.5.5 0 0 0 .708-.708L8.707 8l3.147-3.146z"/>
                         </svg>
@@ -70,7 +77,7 @@
                             <path fill-rule="evenodd" d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0v1z"/>
                             <path fill-rule="evenodd" d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z"/>
                         </svg>
-                        W trakcie
+                        W trakcie<small th:text="${' (pozostało ' + task.calculateLeftTime() + ')'}"></small>
                     </div>
                     <div th:case="${T(pl.zalwi.data.Status).DELAYED}" style="color: red">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-alarm" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

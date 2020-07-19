@@ -84,14 +84,19 @@ public class Task {
     }
 
     public String calculateDelay(){
-
         if(deadlineDate.equals(null)){return "00h00s";};
+        return getDifferenceBetweenDateTimeInHoursAndMinutes(deadlineDate,LocalDateTime.now());
+    }
 
-        long minutes = ChronoUnit.MINUTES.between(deadlineDate, LocalDateTime.now());
-        long hours = ChronoUnit.HOURS.between(deadlineDate, LocalDateTime.now());
+    public String calculateLeftTime(){
+        if(finished){return "00h00s";};
+        return getDifferenceBetweenDateTimeInHoursAndMinutes(LocalDateTime.now(),deadlineDate);
+    }
 
+    private String getDifferenceBetweenDateTimeInHoursAndMinutes(LocalDateTime firstDateTime, LocalDateTime secondDateTime){
+        long minutes = ChronoUnit.MINUTES.between(firstDateTime, secondDateTime);
+        long hours = ChronoUnit.HOURS.between(firstDateTime, secondDateTime);
         long minutesWithoutHours = minutes % 60;
-
         return hours + "h" + minutesWithoutHours + "s";
     }
 

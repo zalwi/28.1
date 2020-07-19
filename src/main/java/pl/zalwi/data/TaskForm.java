@@ -28,11 +28,18 @@ public class TaskForm {
 
     public Task convertToTask(){
         Boolean isFinished;
-        if(finished != null){
-            isFinished=true;
+//        if(finished != null){
+//            isFinished=true;
+//        }else{
+//            isFinished=false;
+//        }
+        if(endDate != null){
+            isFinished = true;
         }else{
-            isFinished=false;
+            isFinished = false;
         }
+
+
         return new Task(id,category,description,creationDate,deadlineDate,endDate,isFinished);
     }
 
