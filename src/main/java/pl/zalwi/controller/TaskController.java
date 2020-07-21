@@ -33,9 +33,9 @@ public class TaskController {
     @GetMapping("/list")
     public String listTransactions(@RequestParam(name = "finished") Optional<Boolean> isFinished, Model model) {
         isFinished.ifPresentOrElse(
-                (sortByStatusIsFinished) -> {
-                    model.addAttribute("tasks", taskService.findAllByStatus(sortByStatusIsFinished));
-                    if (sortByStatusIsFinished) {
+                (status) -> {
+                    model.addAttribute("tasks", taskService.findAllByStatus(status));
+                    if (status) {
                         model.addAttribute("listDescription", "Zakończone zadania");
                     } else {
                         model.addAttribute("listDescription", "Zadania bieżące");

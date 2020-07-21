@@ -28,11 +28,11 @@ public class TaskForm {
 
     public Task convertToTask(){
         Boolean isFinished;
-//        if(finished != null){
-//            isFinished=true;
-//        }else{
-//            isFinished=false;
-//        }
+        /*
+        Form is used to create,modify,finish and delete tasks
+        Function needs to check if endDate is blank(or deactivated)
+        To set correct "task.finished" flag
+         */
         if(endDate != null){
             isFinished = true;
         }else{
@@ -40,7 +40,7 @@ public class TaskForm {
         }
 
 
-        return new Task(id,category,description,creationDate,deadlineDate,endDate,isFinished);
+        return new Task(id, category, description, creationDate, deadlineDate, endDate, isFinished);
     }
 
     public Long getId() {

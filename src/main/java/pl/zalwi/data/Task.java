@@ -67,33 +67,37 @@ public class Task {
         }
     }
 
-    public Status checkStatus(){
-        if(!finished){
-            if(deadlineDate.isBefore(LocalDateTime.now())){
+    public Status checkStatus() {
+        if (!finished) {
+            if (deadlineDate.isBefore(LocalDateTime.now())) {
                 return Status.DELAYED;
-            }else{
+            } else {
                 return Status.INPROGRESS;
             }
-        }else{
-            if(deadlineDate.isBefore(endDate)){
+        } else {
+            if (deadlineDate.isBefore(endDate)) {
                 return Status.DONEAFTER;
-            }else{
+            } else {
                 return Status.DONE;
             }
         }
     }
 
-    public String calculateDelay(){
-        if(deadlineDate.equals(null)){return "00h00s";};
-        return getDifferenceBetweenDateTimeInHoursAndMinutes(deadlineDate,LocalDateTime.now());
+    public String calculateDelay() {
+        if (deadlineDate.equals(null)) {
+            return "00h00s";
+        }
+        return getDifferenceBetweenDateTimeInHoursAndMinutes(deadlineDate, LocalDateTime.now());
     }
 
-    public String calculateLeftTime(){
-        if(finished){return "00h00s";};
-        return getDifferenceBetweenDateTimeInHoursAndMinutes(LocalDateTime.now(),deadlineDate);
+    public String calculateLeftTime() {
+        if (finished) {
+            return "00h00s";
+        }
+        return getDifferenceBetweenDateTimeInHoursAndMinutes(LocalDateTime.now(), deadlineDate);
     }
 
-    private String getDifferenceBetweenDateTimeInHoursAndMinutes(LocalDateTime firstDateTime, LocalDateTime secondDateTime){
+    private String getDifferenceBetweenDateTimeInHoursAndMinutes(LocalDateTime firstDateTime, LocalDateTime secondDateTime) {
         long minutes = ChronoUnit.MINUTES.between(firstDateTime, secondDateTime);
         long hours = ChronoUnit.HOURS.between(firstDateTime, secondDateTime);
         long minutesWithoutHours = minutes % 60;
